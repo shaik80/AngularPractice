@@ -19,12 +19,30 @@ router.post("/register", (req, res, next) => {
     }
   });
 });
-router.post('/login',(req,res) =>{
-    let userData = req.body;
-    
-})
-router.post('/dashboard',(req,res) =>{
-  res.send("Welcome")
-})
+
+router.post("/login", (req, res) => {
+  let userData = req.body;
+
+  User.findOne({ emailid: userData.emailid }, (error, user) => {
+    if (error) {
+      console.log(error);
+    } else {
+      if (!user) {
+        res.status(401).send("Inavalid user");
+      } else {
+        if (user.password !== userData.password) {
+          res.status(401).send("Password not matched");
+        }
+        else{
+          res.status(200).send(user)
+        }
+      }
+    }
+  });
+});
+
+router.post("/dashboard", (req, res) => {
+  res.send("Welcome");
+});
 
 module.exports = router;
