@@ -1,0 +1,62 @@
+<div class="card mt-5">
+  <div class="card-header">
+    Register
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="form-group row">
+        <label for="inputusername" class="col-sm-2 col-form-label"
+          >Username</label
+        >
+        <div class="col-sm-10">
+          <input
+            [(ngModel)]="registerUserData.username"
+            name="username"
+            type="text"
+            class="form-control"
+            id="inputusername"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input
+            [(ngModel)]="registerUserData.emailid"
+            name="emailid"
+            type="email"
+            class="form-control"
+            id="inputEmail3"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label"
+          >Password</label
+        >
+        <div class="col-sm-10">
+          <input
+            [(ngModel)]="registerUserData.password"
+            name="password"
+            type="password"
+            class="form-control"
+            id="inputPassword3"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button (click)="registerUser()" type="submit" class="btn btn-primary">Register</button>
+        </div>
+      </div>
+      <div class="form-group row ">
+        <a
+          class="col-sm-2 col-form-label"
+          routerLink="/login"
+          routerLinkActive="active"
+          >Login</a
+        >
+      </div>
+    </form>
+  </div>
+</div>

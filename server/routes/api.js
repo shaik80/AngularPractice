@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require('jsonwebtoken')
 const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
@@ -15,7 +16,9 @@ router.post("/register", (req, res, next) => {
     if (error) {
       console.log(error);
     } else {
-      res.status(200).send(register);
+      let payload = { subject: register._id }
+      let token = jwt.sign(payload, 'secretKey')
+      res.status(200).send({token});
     }
   });
 });
@@ -25,7 +28,7 @@ router.post("/login", (req, res) => {
 
   User.findOne({ emailid: userData.emailid }, (error, user) => {
     if (error) {
-      console.log(error);
+      console.log( );
     } else {
       if (!user) {
         res.status(401).send("Inavalid user");
@@ -34,8 +37,9 @@ router.post("/login", (req, res) => {
           res.status(401).send("Password not matched");
         }
         else{
-          res.status(200).send(user)
-        }
+          let payload = { subject: user._id }
+          let token = jwt.sign(payload, 'secretKey')
+          res.status(200).send({token});        }
       }
     }
   });
