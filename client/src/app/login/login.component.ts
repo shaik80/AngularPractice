@@ -16,9 +16,9 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this._auth.loginUser(this.loginUserData).subscribe(
       res => {
+        this._auth.setToken(res.token)
         console.log(res);
         this._router.navigate(["/dashboard"]);
-        localStorage.setItem("token", res.token);
       },
       err => console.log(err)
     );
