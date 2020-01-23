@@ -1,0 +1,59 @@
+<div class="card mb-5" *ngFor="let issues of issue">
+  <div class="card-header">
+    {{ issues.Title }}
+  </div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div class="row">
+          <samp class="col-6">Description : </samp>
+          <div class="col-6">
+            {{ issues.Description }}
+          </div>
+        </div>
+
+        <!-- <samp class="">Describtion</samp
+        ><span> : Issue related to pull request in GitHub </span> -->
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <samp class="col-6">Severity Level : </samp>
+          <div class="col-6">{{ issues.Severity }}</div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <samp class="col-6">Status : </samp>
+          <div class="col-6">{{ issues.Status }}</div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <samp class="col-6">Created Date : </samp>
+          <div class="col-6">
+            {{ issues.date }}
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <samp class="col-6">Resolved Date : </samp>
+          <div class="col-6">
+            {{ issues.ResolvedDate }}
+          </div>
+        </div>
+      </li>
+      <div class="d-flex bd-highlight mt-3">
+        <a href="#" class="btn btn-primary m-2 flex-fill bd-highlight">Edit</a>
+        <a
+          class="btn btn-primary m-2 flex-fill bd-highlight"
+          (click)="goToAddMessage(issues._id)"
+          >Add Message</a
+        >
+      </div>
+    </ul>
+  </div>
+</div>
+<!-- <app-add-issues></app-add-issues> -->
+<div *ngFor="let issues of issue; let i = index">{{ i }} {{ issues._id }}</div>
+<!-- {{ issue }} -->

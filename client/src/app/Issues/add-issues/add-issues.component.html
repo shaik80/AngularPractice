@@ -1,0 +1,205 @@
+<form #addNewForm="ngForm" (ngSubmit)="addNew(addNewForm.value)" class="mt-5">
+  <div class="card border-dark mb-3 m-4">
+    <div class="card-header">
+      <h5>Raise New Issue</h5>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label [class.text-danger]="titleValue.invalid && titleValue.touched"
+          >Title **</label
+        >
+        <input
+          class="form-control form-control-label"
+          [class.is-invalid]="titleValue.invalid && titleValue.touched"
+          id="descriptionId"
+          required
+          name="Title"
+          type="text"
+          [(ngModel)]="title"
+          #titleValue="ngModel"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="titleValue.invalid && titleValue.touched"
+        >
+          Please Enter Title. It is a Mandatory Field.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label
+          [class.text-danger]="
+            descriptionValue.invalid && descriptionValue.touched
+          "
+          >Description **</label
+        >
+        <textarea
+          class="form-control form-control-label"
+          [class.is-invalid]="
+            descriptionValue.invalid && descriptionValue.touched
+          "
+          id="descriptionId"
+          required
+          name="Description"
+          type="text"
+          [(ngModel)]="description"
+          #descriptionValue="ngModel"
+          rows="3"
+        ></textarea>
+
+        <div
+          class="invalid-feedback"
+          *ngIf="descriptionValue.invalid && descriptionValue.touched"
+        >
+          Please describe the issue. It is a Mandatory Field.
+        </div>
+      </div>
+      <div class="form-group">
+        <ng-multiselect-dropdown
+          class=""
+          [placeholder]="'Select Users'"
+          [data]="allUsers"
+          #users="ngModel"
+          [(ngModel)]="selectedItems"
+          [settings]="dropdownSettings"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+          (onDeSelect)="onDeSelect($event)"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <!-- <div class="form-group">
+        <label>Select users **</label>
+
+        <select
+          class="form-control form-control-label"
+          id="Users"
+          name="users"
+          [(ngModel)]="users"
+        >
+          <option value="12">
+            shaik mudassir
+          </option>
+        </select>
+      </div> -->
+      <!-- <label>{{ addNewForm.value | json }}</label> -->
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Severity Level</label>
+          <div class="form-control" id="severity">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="severityIdForMinor"
+                name="Severity"
+                value="Minor"
+                [(ngModel)]="severity"
+              />
+              <label class="form-check-label">Minor</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="severityIdForMajor"
+                name="Severity"
+                value="Major"
+                [(ngModel)]="severity"
+              />
+              <label class="form-check-label">Major</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="severityIdForCritical"
+                name="Severity"
+                value="Critical"
+                [(ngModel)]="severity"
+              />
+              <label class="form-check-label">Critical</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Status</label>
+          <div class="form-control" id="sta">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="statusForOpen"
+                name="Status"
+                value="Open"
+                [(ngModel)]="status"
+              />
+              <label class="form-check-label">Open</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="statusForInProgress"
+                name="Status"
+                value="In Progress"
+                [(ngModel)]="status"
+              />
+              <label for="sta2" class="form-check-label">In Progress</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="statusResolved"
+                name="Status"
+                value="Resolved"
+                [(ngModel)]="status"
+              />
+              <label class="form-check-label">Resolved</label>
+            </div>
+            <div class="form-group mt-3" *ngIf="status == 'Resolved'">
+              <label
+                [class.text-danger]="resultDate.invalid && resultDate.touched"
+                >Resolved Date **</label
+              >
+              <input
+                class="form-control"
+                [class.is-invalid]="resultDate.invalid && resultDate.touched"
+                id="resultDate"
+                name="ResolvedDate"
+                required
+                type="date"
+                [(ngModel)]="rd"
+                #resultDate="ngModel"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="resultDate.invalid && resultDate.touched"
+              >
+                Please select Resolved Date. It is a Mandatory Field.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="help-block text-muted ml-3">
+          ** Mandatory field.
+        </div>
+      </div>
+    </div>
+    <div class="card-footer mt-5">
+      <input
+        class="btn btn-primary"
+        [disabled]="addNewForm.invalid"
+        type="submit"
+        value="Save"
+      />
+    </div>
+  </div>
+</form>

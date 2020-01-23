@@ -4,6 +4,8 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AuthGuard } from "./guard/auth.guard";
+import { AddIssuesComponent } from "./Issues/add-issues/add-issues.component";
+import { AddMessageComponent } from "./Issues/add-message/add-message.component";
 
 const routes: Routes = [
   {
@@ -20,8 +22,23 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: "addIssue",
+    component: AddIssuesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "addMessage/:id",
+    component: AddMessageComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: "",
     redirectTo: "/login",
+    pathMatch: "full"
+  },
+  {
+    path: "addMessage",
+    redirectTo: "/dashboard",
     pathMatch: "full"
   }
 ];

@@ -1,0 +1,118 @@
+<ng-container *ngIf="issuedetails !== undefined; else loader">
+  <div class="card border-dark mb-3 m-4">
+    <div class="card-header">
+      <h5>
+        {{ issuedetails.Title }}
+      </h5>
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="row">
+            <samp class="col-6">Description : </samp>
+            <div class="col-6">
+              {{ issuedetails.Description }}
+              GitHub
+            </div>
+          </div>
+
+          <!-- <samp class="">Describtion</samp
+          ><span> : Issue related to pull request in GitHub </span> -->
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <samp class="col-6">Severity Level : </samp>
+            <div class="col-6">{{ issuedetails.Severity }}</div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <samp class="col-6">Status : </samp>
+            <div class="col-6">{{ issuedetails.Status }}</div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <samp class="col-6">Created Date : </samp>
+            <div class="col-6">
+              {{ issuedetails.date }}
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <samp class="col-6">Resolved Date : </samp>
+            <div class="col-6"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- <app-add-issues></app-add-issues> -->
+
+  <form
+    #addNewMessage="ngForm"
+    (ngSubmit)="addMessage(addNewMessage.value)"
+    class="mt-5"
+  >
+    <div class="card border-dark mb-3 m-4">
+      <div class="card-header">
+        <h5>Send message</h5>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <h5>{{ UserDetails.username }}</h5>
+        </div>
+        <div class="form-group">
+          <label
+            [class.text-danger]="messageValue.invalid && messageValue.touched"
+            >message **</label
+          >
+          <textarea
+            class="form-control form-control-label"
+            [class.is-invalid]="messageValue.invalid && messageValue.touched"
+            id="messageId"
+            required
+            name="message"
+            type="text"
+            [(ngModel)]="description"
+            #messageValue="ngModel"
+            rows="3"
+          ></textarea>
+          <div
+            class="invalid-feedback"
+            *ngIf="messageValue.invalid && messageValue.touched"
+          >
+            Please Enter message before submitting. It is a Mandatory Field.
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <input
+          class="btn btn-primary"
+          [disabled]="addNewMessage.invalid"
+          type="submit"
+          value="Save"
+        />
+      </div>
+    </div>
+  </form>
+  <div class="card border-dark mb-3 m-4">
+    <div class="card-header">
+      <h5>Message's</h5>
+    </div>
+
+    <ul
+      class="list-group list-group-flush"
+      *ngFor="let messages of issueMessage"
+    >
+      <li class="list-group-item">
+        <h5>{{ messages.user }}</h5>
+        {{ messages.message }}
+      </li>
+    </ul>
+  </div>
+</ng-container>
+<ng-template #loader>
+  <img src="../../../assets/loader.gif" class="rounded mx-auto d-block" />
+</ng-template>
