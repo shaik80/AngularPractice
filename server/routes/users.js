@@ -69,7 +69,7 @@ router.post(
 
       jwt.sign(payload, "secretKey", (err, token) => {
         if (err) throw err;
-        res.status(200).send({ token: token, id: user._id });
+        res.status(200).send({ token: token });
       });
     } catch (err) {
       res.status(500).send("Server error");
@@ -117,7 +117,7 @@ router.post(
 
       jwt.sign(payload, "secretKey", (err, token) => {
         if (err) throw err;
-        else res.status(200).send({ token: token, id: user._id });
+        else res.status(200).send({ token: token });
       });
     } catch (err) {
       res.status(500).send("Server error");
@@ -131,7 +131,6 @@ router.post(
 router.get("/ViewUsers", verifyToken, async (req, res) => {
   try {
     const user = await User.find();
-
     res.send(user);
   } catch (err) {
     res.json(err);
@@ -144,7 +143,6 @@ router.get("/ViewUsers", verifyToken, async (req, res) => {
 router.get("/ViewUsers/:id", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-
     res.send(user);
   } catch (err) {
     res.json(err);

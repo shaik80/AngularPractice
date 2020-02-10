@@ -25,8 +25,9 @@ export class RegisterComponent implements OnInit {
         this.toastr.success("Registeration sucessful", "", {
           positionClass: "toast-bottom-full-width"
         });
+
+        console.log(res);
         localStorage.setItem("token", res.token);
-        this._auth.setId(res.id);
         this._router.navigate(["/dashboard"]);
       },
       err => {
@@ -42,7 +43,6 @@ export class RegisterComponent implements OnInit {
             });
           }
         }
-        console.log(err);
       }
     );
   }

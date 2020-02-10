@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 //connect db
+
 mongoose.connect(
   "mongodb+srv://root:root@cluster0-mp92k.mongodb.net/AngularPractice?retryWrites=true&w=majority",
   {
@@ -11,7 +12,7 @@ mongoose.connect(
     if (!err) {
       console.log("db connection sucessed");
     } else {
-      console.log("db connection error " + err);
+      console.log("db connection error ");
     }
   }
 );

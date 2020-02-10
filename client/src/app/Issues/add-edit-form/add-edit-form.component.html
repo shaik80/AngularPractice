@@ -1,6 +1,11 @@
-<!-- <form #addNewForm="ngForm" (ngSubmit)="addNew(addNewForm.value)" class="mt-5">
+<form
+  #addEditForm="ngForm"
+  (ngSubmit)="addEdit(addEditForm.value)"
+  class="mt-5"
+>
   <div class="card border-dark mb-3 m-4">
     <div class="card-header">
+      <!-- {{ message }} -->
       <h5>Raise New Issue</h5>
     </div>
     <div class="card-body">
@@ -27,27 +32,21 @@
       </div>
 
       <div class="form-group">
-        <label
-          [class.text-danger]="
-            descriptionValue.invalid && descriptionValue.touched
-          "
-          >Description **</label
-        >
-        <textarea
-          class="form-control form-control-label"
+        <label>Description **</label>
+        <angular-editor
+          [placeholder]="'Enter text here...'"
+          [(ngModel)]="description"
+          [config]="editorConfig"
           [class.is-invalid]="
             descriptionValue.invalid && descriptionValue.touched
           "
-          
           id="descriptionId"
           required
           name="Description"
           type="text"
-          [(ngModel)]="description"
           #descriptionValue="ngModel"
           rows="3"
-        ></textarea>
-
+        ></angular-editor>
         <div
           class="invalid-feedback"
           *ngIf="descriptionValue.invalid && descriptionValue.touched"
@@ -183,11 +182,10 @@
     <div class="card-footer mt-5">
       <input
         class="btn btn-primary"
-        [disabled]="addNewForm.invalid || validatMultiselctor()"
+        [disabled]="addEditForm.invalid || validatMultiselctor()"
         type="submit"
         value="Save"
       />
     </div>
   </div>
-</form> -->
-<app-add-edit-form></app-add-edit-form>
+</form>

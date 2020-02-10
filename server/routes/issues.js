@@ -10,13 +10,21 @@ const { verifyToken } = require("./verifyToken");
 // @access      Public
 router.post("/AddIssue", verifyToken, async (req, res) => {
   try {
-    const { Title, Description, Users, Severity, Status } = req.body;
+    const {
+      Title,
+      Description,
+      Users,
+      Severity,
+      Status,
+      ResolvedDate
+    } = req.body;
     let addIssue = new Issue({
       Title,
       Description,
       Users,
       Severity,
-      Status
+      Status,
+      ResolvedDate
     });
     await addIssue.save();
     if (!addIssue) {
@@ -34,9 +42,12 @@ router.post("/AddIssue", verifyToken, async (req, res) => {
 // @access      Public
 router.get("/ViewOneIssue/:id", verifyToken, async (req, res) => {
   try {
-    const ViewIssue = await Issue.findById(req.params.id);
-    const FinalIssueDetails = await getUserDetailsWithIsuueDetails(ViewIssue);
-    res.send(FinalIssueDetails);
+    const ViewIssue = await Issue.findById(req.params.id)
+      .populate("message")
+      .populate("Users");
+    // const FinalIssueDetails = await getUserDetailsWithIsuueDetails(ViewIssue);
+
+    res.send(ViewIssue);
   } catch (err) {
     if (err) res.json(err);
   }
@@ -45,62 +56,91 @@ router.get("/ViewOneIssue/:id", verifyToken, async (req, res) => {
 // @route       Get /ViewIssue
 // @desc        To show all users
 // @access      Public
-router.get("/UserViewIssue/:id", verifyToken, async (req, res) => {
+router.get("/UserViewIssue/", verifyToken, async (req, res) => {
   try {
-    const ViewIssue = await Issue.find({ Users: req.params.id }, null, {
+    const ViewIssue = await Issue.find({ Users: req._id }, null, {
       sort: { _id: -1 }
     });
-    // const FinalIssueDetails = await getUserDetailsWithIsuueDetails(ViewIssue);
-    // console.log(FinalIssueDetails[1]);
     res.send(ViewIssue);
   } catch (err) {
     res.json(err);
   }
 });
 
-const getUserDetailsWithIsuueDetails = async IssueDetails => {
-  let arrayOfIssueWithUserDetails = [];
-  arrayOfIssueWithUserDetails.push(IssueDetails);
-  for (let i = 0; i < IssueDetails.Users.length; i++) {
-    const UserId = IssueDetails.Users[0];
-    arrayOfIssueWithUserDetails.push(await getIndividualUserDetails(UserId));
-  }
+// const getUserDetailsWithIsuueDetails = async IssueDetails => {
+//   let arrayOfIssueWithUserDetails = [];
+//   arrayOfIssueWithUserDetails.push(IssueDetails);
+//   for (let i = 0; i < IssueDetails.Users.length; i++) {
+//     const UserId = IssueDetails.Users[0];
+//     arrayOfIssueWithUserDetails.push(await getIndividualUserDetails(UserId));
+//   }
+//   return arrayOfIssueWithUserDetails;
+// };
 
-  return arrayOfIssueWithUserDetails;
-};
-const getIndividualUserDetails = async UserId => {
-  let UserDetails = await User.findById(UserId);
-  if (!UserDetails) {
-    console.log("User not found");
-  } else {
-    return UserDetails;
-  }
-};
+// const getIndividualUserDetails = async UserId => {
+//   let UserDetails = await User.findById(UserId);
+//   if (!UserDetails) {
+//     console.log("User not found");
+//   } else {
+//     return UserDetails;
+//   }
+// };
 
-// @route       post /AddMessage
-// @desc        To Add User message
+// // @route       post /AddMessage
+// // @desc        To Add User message
+// // @access      Public
+// router.post("/AddMessage/:Username/:id", verifyToken, async (req, res) => {
+//   try {
+//     const { message } = req.body;
+//     const Username = req.params.Username;
+//     const UpdateIssue = await Issue.updateOne(
+//       { _id: req.params.id },
+//       {
+//         $push: {
+//           message: {
+//             $each: [{ message: message, user: Username }],
+//             $position: 0
+//           }
+//         }
+//       }
+//     );
+//     if (!UpdateIssue) {
+//       res.status(400).send("Somthing went wrong");
+//     } else {
+//       res.status(200).send({ message: "Sucessfully added" });
+//     }
+//   } catch (err) {
+//     res.json(err);
+//   }
+// });
+
+// @route       post /EditIssue
+// @desc        To Edit Issue
 // @access      Public
-router.post("/AddMessage/:Username/:id", verifyToken, async (req, res) => {
+router.post("/EditIssue/:id", verifyToken, async (req, res) => {
   try {
-    const { message } = req.body;
-    const Username = req.params.Username;
-    const UpdateIssue = await Issue.updateOne(
+    const data = {
+      Title: req.body.Title,
+      Description: req.body.Description,
+      Users: req.body.Users,
+      Severity: req.body.Severity,
+      Status: req.body.Status,
+      ResolvedDate: req.body.ResolvedDate
+    };
+
+    let responseMessage;
+    await Issue.updateOne(
       { _id: req.params.id },
-      {
-        $push: {
-          message: {
-            $each: [{ message: message, user: Username }],
-            $position: 0
-          }
+      { $set: data },
+      (err, res) => {
+        responseMessage = "Data inserted";
+        if (err) {
+          responseMessage = "error";
         }
       }
     );
-    console.log(UpdateIssue);
-    if (!UpdateIssue) {
-      res.status(400).send("Somthing went wrong");
-    } else {
-      res.status(200).send({ message: "Sucessfully added" });
-    }
+
+    res.send({ message: responseMessage });
   } catch (err) {
     res.json(err);
   }

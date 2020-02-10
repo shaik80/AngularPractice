@@ -1,17 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Config } from "../../utils/editorConfig";
 import { AuthService } from "src/app/services/auth.service";
-import { IssuesService } from "../../services/issue/issues.service";
-import { UsersService } from "../../services/users/users.service";
-import { HttpErrorResponse } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { IssuesService } from "src/app/services/issue/issues.service";
 import { ToastrService } from "ngx-toastr";
+import { UsersService } from "src/app/services/users/users.service";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
-  selector: "app-add-issues",
-  templateUrl: "./add-issues.component.html",
-  styleUrls: ["./add-issues.component.css"]
+  selector: "app-add-edit-form",
+  templateUrl: "./add-edit-form.component.html",
+  styleUrls: ["./add-edit-form.component.css"]
 })
-export class AddIssuesComponent implements OnInit {
+export class AddEditFormComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private _router: Router,
@@ -20,6 +21,7 @@ export class AddIssuesComponent implements OnInit {
     private _users: UsersService
   ) {}
 
+  editorConfig = Config;
   // Default  selected  radio button
   issues: any;
   status = "Open";
@@ -50,7 +52,7 @@ export class AddIssuesComponent implements OnInit {
   }
 
   // To store data into database
-  addNew(data: any) {
+  addEdit(data: any) {
     // Convert map into an array
     let keys = Array.from(this.selectedUsers.keys());
 

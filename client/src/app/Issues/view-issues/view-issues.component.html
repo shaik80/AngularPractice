@@ -1,59 +1,254 @@
-<div class="card mb-5" *ngFor="let issues of issue">
-  <div class="card-header">
-    {{ issues.Title }}
-  </div>
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <div class="row">
-          <samp class="col-6">Description : </samp>
-          <div class="col-6">
-            {{ issues.Description }}
-          </div>
-        </div>
+<ng-container *ngIf="issue !== undefined; else loader">
+  <div class="card mb-3 mt-5 m-2">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <label class="btn btn-light btn-block"
+              >Total : {{ countArray() }} / {{ issue.length }}</label
+            >
+          </li>
+          <li class="list-group-item">
+            <button class="btn btn-light btn-block">
+              Customise
+            </button>
+            <form #customeForm="ngForm">
+              <h6 class="card-title align-right">Customise View</h6>
+              <div class="form-group">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id=""
+                    name="CreatedDate"
+                    [(ngModel)]="CreatedDate"
+                  />
+                  <label class="form-check-label" for="item1"
+                    >Created Date</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="Description"
+                    [(ngModel)]="Description"
+                  />
+                  <label class="form-check-label" for="item2"
+                    >Description</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id=""
+                    name="customiseitem"
+                    name="Severity"
+                    [(ngModel)]="Severity"
+                  />
+                  <label class="form-check-label" for="item3">Severity</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id=""
+                    name="customiseitem"
+                    name="Status"
+                    [(ngModel)]="Status"
+                  />
+                  <label class="form-check-label" for="item4">Status</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id=""
+                    name="ResolvedDate"
+                    [(ngModel)]="ResolvedDate"
+                  />
+                  <label class="form-check-label" for="item5"
+                    >Resolved Date</label
+                  >
+                </div>
+              </div>
+            </form>
+          </li>
+          <li class="list-group-item ">
+            <button class="btn btn-light btn-block">
+              Filter
+            </button>
+            <form #filterForm="ngForm">
+              <h6 class="card-title align-right">Severity | Hardness level</h6>
+              <div class="form-group">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="SeverityFilter"
+                    [(ngModel)]="SeverityFilter"
+                    value="All"
+                  />
+                  <label class="form-check-label" for="sevfilter1">All</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="SeverityFilter"
+                    [(ngModel)]="SeverityFilter"
+                    value="Minor"
+                  />
+                  <label class="form-check-label" for="sevfilter1">Minor</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="SeverityFilter"
+                    [(ngModel)]="SeverityFilter"
+                    value="Major"
+                  />
+                  <label class="form-check-label" for="sevfilter1">Major</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="SeverityFilter"
+                    [(ngModel)]="SeverityFilter"
+                    value="Critical"
+                  />
+                  <label class="form-check-label" for="sevfilter1"
+                    >Critical</label
+                  >
+                </div>
+              </div>
+              <h6 class="card-title align-right">Status Filter</h6>
 
-        <!-- <samp class="">Describtion</samp
-        ><span> : Issue related to pull request in GitHub </span> -->
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <samp class="col-6">Severity Level : </samp>
-          <div class="col-6">{{ issues.Severity }}</div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <samp class="col-6">Status : </samp>
-          <div class="col-6">{{ issues.Status }}</div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <samp class="col-6">Created Date : </samp>
-          <div class="col-6">
-            {{ issues.date }}
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <samp class="col-6">Resolved Date : </samp>
-          <div class="col-6">
-            {{ issues.ResolvedDate }}
-          </div>
-        </div>
-      </li>
-      <div class="d-flex bd-highlight mt-3">
-        <a href="#" class="btn btn-primary m-2 flex-fill bd-highlight">Edit</a>
-        <a
-          class="btn btn-primary m-2 flex-fill bd-highlight"
-          (click)="goToAddMessage(issues._id)"
-          >Add Message</a
-        >
+              <div class="form-group">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="StatusFilter"
+                    [(ngModel)]="StatusFilter"
+                    value="All"
+                  />
+                  <label class="form-check-label" for="sevfilter1">All</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="StatusFilter"
+                    [(ngModel)]="StatusFilter"
+                    value="Open"
+                  />
+                  <label class="form-check-label" for="sevfilter1">Open</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="StatusFilter"
+                    [(ngModel)]="StatusFilter"
+                    value="In Progress"
+                  />
+                  <label class="form-check-label" for="sevfilter1"
+                    >In Progress</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id=""
+                    name="StatusFilter"
+                    [(ngModel)]="StatusFilter"
+                    value="Resolved"
+                  />
+                  <label class="form-check-label" for="sevfilter1"
+                    >Resolved</label
+                  >
+                </div>
+              </div>
+            </form>
+          </li>
+        </ul>
       </div>
-    </ul>
+      <div class="col-md-8">
+        <div *ngFor="let issues of issue">
+          <div class="card mb-5" *ngIf="getIssues(issues)">
+            <div class="card-header">
+              {{ issues.Title }}
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" *ngIf="Description">
+                  <div class="row">
+                    <samp class="col-6">Description : </samp>
+                    <div class="col-6">
+                      <div [innerHtml]="issues.Description">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item" *ngIf="Severity">
+                  <div class="row">
+                    <samp class="col-6">Severity Level : </samp>
+                    <div class="col-6">{{ issues.Severity }}</div>
+                  </div>
+                </li>
+                <li class="list-group-item" *ngIf="Status">
+                  <div class="row">
+                    <samp class="col-6">Status : </samp>
+                    <div class="col-6">{{ issues.Status }}</div>
+                  </div>
+                </li>
+                <li class="list-group-item" *ngIf="CreatedDate">
+                  <div class="row">
+                    <samp class="col-6">Created Date : </samp>
+                    <div class="col-6">
+                      {{ issues.date }}
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item" *ngIf="ResolvedDate">
+                  <div class="row">
+                    <samp class="col-6">Resolved Date : </samp>
+                    <div class="col-6">
+                      {{ issues.ResolvedDate }}
+                    </div>
+                  </div>
+                </li>
+                <div class="d-flex bd-highlight mt-3">
+                  <!-- <a href="#" class="btn btn-primary m-2 flex-fill bd-highlight"
+                  >Edit</a
+                > -->
+                  <a
+                    class="btn btn-primary m-2 flex-fill bd-highlight"
+                    (click)="goToAddMessage(issues._id)"
+                    >Add Message</a
+                  >
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<!-- <app-add-issues></app-add-issues> -->
-<div *ngFor="let issues of issue; let i = index">{{ i }} {{ issues._id }}</div>
-<!-- {{ issue }} -->
+</ng-container>
+<ng-template #loader>
+  <img src="../../../assets/loader.gif" class="rounded mx-auto d-block" />
+</ng-template>

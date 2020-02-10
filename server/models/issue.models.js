@@ -28,12 +28,8 @@ const IssueSchema = new mongoose.Schema({
   },
   message: [
     {
-      message: {
-        type: String
-      },
-      user: {
-        type: String
-      }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message"
     }
   ],
   date: {

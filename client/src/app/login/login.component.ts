@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
           positionClass: "toast-bottom-full-width"
         });
         this._auth.setToken(res.token);
-        this._auth.setId(res.id);
+
         this._router.navigate(["/dashboard"]);
       },
       err => {

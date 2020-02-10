@@ -3,8 +3,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const users = require("./routes/users");
 const issues = require("./routes/issues");
+const messages = require("./routes/messages");
 const PORT = 5000;
 const cors = require("cors");
+
 
 const app = express();
 
@@ -17,3 +19,4 @@ app.listen(PORT, () => {
 
 app.use("/", users);
 app.use("/", issues);
+app.use("/", messages);

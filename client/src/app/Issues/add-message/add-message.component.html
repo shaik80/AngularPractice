@@ -11,13 +11,9 @@
           <div class="row">
             <samp class="col-6">Description : </samp>
             <div class="col-6">
-              {{ issuedetails.Description }}
-              GitHub
+              <div [innerHtml]="issuedetails.Description"></div>
             </div>
           </div>
-
-          <!-- <samp class="">Describtion</samp
-          ><span> : Issue related to pull request in GitHub </span> -->
         </li>
         <li class="list-group-item">
           <div class="row">
@@ -48,7 +44,6 @@
       </ul>
     </div>
   </div>
-  <!-- <app-add-issues></app-add-issues> -->
 
   <form
     #addNewMessage="ngForm"
@@ -63,22 +58,38 @@
         <div class="form-group">
           <h5>{{ UserDetails.username }}</h5>
         </div>
+
         <div class="form-group">
           <label
-            [class.text-danger]="messageValue.invalid && messageValue.touched"
+            [class.text-danger]="
+              (messageValue.invalid && messageValue.touched) || totalChar > 500
+            "
             >message **</label
           >
-          <textarea
-            class="form-control form-control-label"
+          <angular-editor
+            [placeholder]="'Enter text here...'"
+            [(ngModel)]="message"
+            [config]="editorConfig"
             [class.is-invalid]="messageValue.invalid && messageValue.touched"
             id="messageId"
             required
             name="message"
             type="text"
-            [(ngModel)]="description"
             #messageValue="ngModel"
             rows="3"
-          ></textarea>
+            (ngModelChange)="onModelChange($event)"
+          ></angular-editor>
+          <div>{{ totalChar }} / 500</div>
+          <div class="progress">
+            <div
+              [className]="bgColor"
+              role="progressbar"
+              [style.width.%]="progreeBarMoves"
+              aria-valuenow="500"
+              aria-valuemin="0"
+              aria-valuemax="500"
+            ></div>
+          </div>
           <div
             class="invalid-feedback"
             *ngIf="messageValue.invalid && messageValue.touched"
@@ -90,7 +101,7 @@
       <div class="card-footer">
         <input
           class="btn btn-primary"
-          [disabled]="addNewMessage.invalid"
+          [disabled]="addNewMessage.invalid || totalChar > 500"
           type="submit"
           value="Save"
         />
@@ -108,10 +119,11 @@
     >
       <li class="list-group-item">
         <h5>{{ messages.user }}</h5>
-        {{ messages.message }}
+        <div [innerHTML]="messages.message">{{ messages.message }}</div>
       </li>
     </ul>
   </div>
+  <div></div>
 </ng-container>
 <ng-template #loader>
   <img src="../../../assets/loader.gif" class="rounded mx-auto d-block" />
