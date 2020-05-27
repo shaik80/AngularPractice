@@ -34,7 +34,7 @@ import { AngularEditorModule } from "@kolkov/angular-editor";
     ViewIssuesComponent,
     AddMessageComponent,
     AddEditFormComponent,
-    EditIssueComponent
+    EditIssueComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,10 +46,10 @@ import { AngularEditorModule } from "@kolkov/angular-editor";
     ToastrModule.forRoot({
       timeOut: 1000,
       progressBar: true,
-      progressAnimation: "increasing"
+      progressAnimation: "increasing",
     }),
     NgMultiSelectDropDownModule.forRoot(),
-    AngularEditorModule
+    AngularEditorModule,
   ],
   providers: [
     AuthService,
@@ -57,11 +57,11 @@ import { AngularEditorModule } from "@kolkov/angular-editor";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
-      multi: true
+      multi: true,
     },
     UsersService,
-    IssuesService
+    IssuesService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

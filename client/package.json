@@ -25,6 +25,7 @@
     "@ckeditor/ckeditor5-word-count": "^16.0.0",
     "@kolkov/angular-editor": "^1.0.2",
     "@tinymce/tinymce-angular": "^3.3.1",
+    "angular-google-charts": "^1.1.4",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng2-ckeditor": "^1.2.6",
     "ngx-quill": "^7.3.12",

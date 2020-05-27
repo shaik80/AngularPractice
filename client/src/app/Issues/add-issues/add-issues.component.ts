@@ -112,8 +112,7 @@ export class AddIssuesComponent implements OnInit {
       res => {
         this.selectedUsers = new Map<string, Array<any>>();
         this.allUsers = res;
-      },
-      err => {}
+      }
     );
   }
 
