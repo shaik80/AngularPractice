@@ -21,7 +21,7 @@
     "@angular/router": "~8.2.14",
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@ckeditor/ckeditor5-build-classic": "^16.0.0",
-    "@ckeditor/ckeditor5-media-embed": "^16.0.0",
+    "@ckeditor/ckeditor5-media-embed": "^27.0.0",
     "@ckeditor/ckeditor5-word-count": "^16.0.0",
     "@kolkov/angular-editor": "^1.0.2",
     "@tinymce/tinymce-angular": "^3.3.1",
